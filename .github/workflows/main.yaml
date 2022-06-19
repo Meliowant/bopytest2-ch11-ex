@@ -1,0 +1,28 @@
+name: "GH Actions for excerice 6 of chapter 11 from 'Python Testing with pytest'"
+
+on: ["push", "pull_requests"]
+
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        continue-on-error: ${{ matrix.experimental }}
+        
+        strategy:
+            matrix:
+                python: ["3.7", "3.8", "3.9", "3.10"]
+                experimental: [false]
+                include:
+                    - python: "3.11"
+                      experimental: true
+        
+        steps:
+            - uses: action/checkout@v3
+            - name: Installing Python
+              uses: actions/setup-python@v3
+              with:
+                python-version: $${{ matrix.python }}
+            - name: Install tox and requested packages
+              run: pip install tox
+            - name: Run tox
+              run: tox -e py
