@@ -3,24 +3,25 @@ name: GH Actions for excerice 6 of chapter 11 from 'Python Testing with pytest'
 on: [push, pull_request]
 
 jobs:
-    build:
+  build:
 
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                python: ["3.11.0-beta.3"]
-        
-        
-        
-        
-        
-        steps:
-          - uses: actions/checkout@v2
-          - name: Installing Python
-            uses: actions/setup-python@v2
-            with:
-              python-version: $${{ matrix.python }}
-          - name: Install tox and requested packages
-            run: pip install tox
-          - name: Run tox
-            run: tox -e py
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      matrix:
+        python: ["3.7", "3.8", "3.9", "3.10"]
+        experimental: [false]
+        include:
+        - python: "3.11"
+          experimental: true
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install Tox and any other packages
+        run: pip install tox
+      - name: Run Tox
+        run: tox -e py
