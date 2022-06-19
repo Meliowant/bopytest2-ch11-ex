@@ -1,6 +1,6 @@
 name: "GH Actions for excerice 6 of chapter 11 from 'Python Testing with pytest'"
 
-on: ["push", "pull_requests"]
+on: ["push", "pull_request"]
 
 
 jobs:
