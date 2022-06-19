@@ -4,20 +4,18 @@ on: [push, pull_request]
 
 jobs:
   build:
-
-
-  runs-on: ubuntu-latest
-  strategy:
-    matrix:
-      python: ["3.10"]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10"]
         
-  steps:
-    - uses: actions/checkout@v2
-    - name: Installing Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: $${{ matrix.python }}
-    - name: Install tox and requested packages
-      run: pip install tox
-    - name: Run tox
-      run: tox -e py
+    steps:
+      - uses: actions/checkout@v2
+      - name: Installing Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: $${{ matrix.python }}
+      - name: Install tox and requested packages
+        run: pip install tox
+      - name: Run tox
+        run: tox -e py
