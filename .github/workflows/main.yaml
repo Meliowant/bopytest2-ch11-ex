@@ -5,14 +5,20 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        python: ["3.8", "3.9", "3.10", "3.11"]
+        python: ["3.8", "3.9", "3.10"]
+        experimental: [false]
+        include:
+        - python: "3.11"
+          experimental: true
+
         
     steps:
       - uses: actions/checkout@v3
       - name: Installing Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
       - name: Install tox and requested packages
